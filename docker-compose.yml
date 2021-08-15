@@ -1,0 +1,35 @@
+version: "3.8"
+services:
+  web:
+    links:
+      - db
+    build: ./flask
+    ports:
+      - "127.0.0.1:8000:8000"
+    volumes:
+      - ./flask:/code
+    command: flask run
+    environment:
+      FLASK_ENV: development
+      FLASK_APP: app.py
+
+  redis:
+    image: "redis:6.2.5-alpine"
+  
+  db:
+    image: "mysql:8.0.26"
+    ports:
+     - "32000:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - ./mysql:/docker-entrypoint-initdb.d/:ro
+  
+  rest:
+    links:
+      - db
+    build: ./fastapi
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./fastapi:/code
