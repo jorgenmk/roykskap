@@ -31,7 +31,7 @@ def hello():
     count = get_hit_count()
     connection = mysql.connector.connect(**config)
     cursor = connection.cursor()
-    cursor.execute('SELECT * FROM log_entry ORDER BY ts ASC LIMIT 20')
+    cursor.execute('SELECT * FROM log_entry ORDER BY ts DESC LIMIT 20')
     data = [[temp, ts] for (temp, ts) in cursor]
     cursor.close()
     connection.close()

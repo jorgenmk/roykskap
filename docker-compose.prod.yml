@@ -3,18 +3,10 @@ services:
   web:
     links:
       - db
-    depends_on:
-      - db
-      - redis
     build: ./flask
     ports:
       - "127.0.0.1:8000:8000"
-    volumes:
-      - ./flask:/code
-    command: flask run --port 8000 --host 0.0.0.0
-    environment:
-      FLASK_ENV: development
-      FLASK_APP: app.py
+    command: gunicorn -b 0.0.0.0:8000 app:app
 
   redis:
     image: "redis:6.2.5-alpine"
@@ -22,7 +14,7 @@ services:
   db:
     image: "mysql:8.0.26"
     ports:
-     - "32000:3306"
+     - "3306"
     environment:
       MYSQL_ROOT_PASSWORD: root
     volumes:
@@ -34,5 +26,3 @@ services:
     build: ./fastapi
     ports:
       - "5000:5000"
-    volumes:
-      - ./fastapi:/code
