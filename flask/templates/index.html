@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Røykskap Hemnskjela{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+<h1>Temperatur: {{ temp.0.0 }}&#8451;</h1>
+<h2>Setpoint: {{ data.setpoint }}&#8451;</h2>
+<table id=customers>
+	<tr>
+		<th>Temperature</th>
+		<th>Timestamp</th>
+	</tr>
+	{% for i in temp %}
+		<tr><td>{{ i.0 }}</td><td>{{ i.1 }}</td></tr>
+	{% endfor %}
+</table>
+{% endblock %}

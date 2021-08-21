@@ -6,6 +6,11 @@ CREATE TABLE log_entry (
   ts VARCHAR(64)
 );
 
+CREATE TABLE settings (
+  name VARCHAR(32),
+  value DEC
+);
+
 INSERT INTO log_entry
   (temp, ts)
 VALUES
@@ -27,3 +32,11 @@ VALUES
   ('123.5', '01-01-2021 12:46:56'),
   ('123.5', '01-01-2021 12:47:56'),
   ('-41.1', '01-01-2021 12:48:57');
+
+INSERT INTO settings
+  (name, value)
+VALUES
+  ('P', 1.0),
+  ('I', 1.0),
+  ('D', 1.0),
+  ('setpoint', 26.0);
