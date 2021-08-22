@@ -10,7 +10,7 @@
 <canvas id="myChart" style="width:100%;max-width:700px"></canvas>
 <script>
 const Http = new XMLHttpRequest();
-const url='http://localhost:5000/api/temp';
+const url='http://temp.nbv.cx:5000/api/temp';
 Http.open("GET", url);
 Http.send();
 Http.onreadystatechange = (e) => {
