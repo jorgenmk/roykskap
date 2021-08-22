@@ -24,7 +24,7 @@ def get_hit_count():
         except redis.exceptions.ConnectionError as exc:
             if retries == 0:
                 raise exc
-            retries -= 1
+            retries -= 1 
             time.sleep(0.5)
 
 @app.route('/')
@@ -46,6 +46,7 @@ def settings():
     cursor = connection.cursor()
     if request.method == 'POST':
         for k, v in request.form.items():
+            print(k, v)
             cursor.execute(f"UPDATE settings SET value = {v} WHERE name = '{k}'")
     cursor.execute('SELECT * FROM settings')
     data = {name: value for (name, value) in cursor}
@@ -54,3 +55,6 @@ def settings():
     connection.close()
     return render_template("settings.html", count=get_hit_count(), data=data)
 
+@app.route('/history')
+def history():
+    return render_template("history.html", count=get_hit_count())

@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Røykskap Hemnskjela{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+<h2>History</h2>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+<canvas id="myChart" style="width:100%;max-width:700px"></canvas>
+<script>
+const Http = new XMLHttpRequest();
+const url='http://localhost:5000/api/temp';
+Http.open("GET", url);
+Http.send();
+Http.onreadystatechange = (e) => {
+  	tempdata = JSON.parse(Http.responseText)
+  	console.log(tempdata);
+  	console.log(tempdata.message);
+	new Chart("myChart", {
+	  type: "line",
+	  data: {
+	  	labels: [...Array(tempdata.message.length).keys()],
+	    datasets: [{
+	      backgroundColor: "rgba(0,0,0,1.0)",
+	      borderColor: "rgba(0,0,0,0)",
+	      data: tempdata.message
+	    }]
+	  },
+	});
+}
+</script>
+{% endblock %}
