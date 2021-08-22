@@ -57,4 +57,11 @@ def settings():
 
 @app.route('/history')
 def history():
-    return render_template("history.html", count=get_hit_count())
+    connection = mysql.connector.connect(**config)
+    cursor = connection.cursor()
+    cursor.execute(f'SELECT temp FROM log_entry ORDER BY ts DESC LIMIT 100')
+    data = [float(x[0]) for x in cursor]
+    legend = list(range(len(data)))
+    cursor.close()
+    connection.close()
+    return render_template("history.html", count=get_hit_count(), data=data, legend=legend)

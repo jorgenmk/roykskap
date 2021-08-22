@@ -9,25 +9,29 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
 <canvas id="myChart" style="width:100%;max-width:700px"></canvas>
 <script>
-const Http = new XMLHttpRequest();
-const url='http://temp.nbv.cx:5000/api/temp';
-Http.open("GET", url);
-Http.send();
-Http.onreadystatechange = (e) => {
-  	tempdata = JSON.parse(Http.responseText)
-  	console.log(tempdata);
-  	console.log(tempdata.message);
-	new Chart("myChart", {
-	  type: "line",
-	  data: {
-	  	labels: [...Array(tempdata.message.length).keys()],
-	    datasets: [{
-	      backgroundColor: "rgba(0,0,0,1.0)",
-	      borderColor: "rgba(0,0,0,0)",
-	      data: tempdata.message
-	    }]
-	  },
-	});
-}
+
+var xValues = {{ legend }};
+var yValues = {{ data }};
+
+new Chart("myChart", {
+  type: "line",
+  data: {
+    labels: xValues,
+    datasets: [{
+      fill: false,
+      lineTension: 0,
+      backgroundColor: "rgba(0,0,255,1.0)",
+      borderColor: "rgba(0,0,255,0.1)",
+      data: yValues
+    }]
+  },
+  options: {
+    legend: {display: false},
+    scales: {
+      yAxes: [{ticks: {min: 0, max:200}}],
+    }
+  }
+});
 </script>
+
 {% endblock %}
