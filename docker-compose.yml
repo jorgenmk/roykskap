@@ -36,3 +36,4 @@ services:
       - "5000:5000"
     volumes:
       - ./fastapi:/code
+    command: uvicorn app:app --reload --host 0.0.0.0 --port 5000 --ssl-certfile cert_server.pem --ssl-keyfile key_server.pem --ssl-cert-reqs 2 --ssl-ca-certs cert_skap.pem
